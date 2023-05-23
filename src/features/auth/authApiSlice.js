@@ -4,7 +4,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         login: builder.mutation({
             query: credentials => ({
-                url: '/users/login',
+                url: `${process.env.REACT_APP_API_URL}/users/login`,
                 method: 'POST',
                 body: { ...credentials }
             }),
@@ -17,14 +17,14 @@ export const authApiSlice = apiSlice.injectEndpoints({
             }
         }),
         codeVerify: builder.query({
-            query: code => `/users/verify/${code}`,
+            query: code => `${process.env.REACT_APP_API_URL}/users/verify/${code}`,
             transformErrorResponse: response => ({
                 response, notification: "Code not found"
             }),
         }),
         createUser: builder.mutation({
             query: user => ({
-                url: '/users',
+                url: `${process.env.REACT_APP_API_URL}/users`,
                 method: 'POST',
                 body: user
             }),
@@ -41,7 +41,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         }),
         passwordVerifyEmail: builder.mutation({
             query: email => ({
-                url: '/users/reset_password',
+                url: `${process.env.REACT_APP_API_URL}/users/reset_password`,
                 method: 'POST',
                 body: email
             }),
@@ -60,7 +60,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
             }),
         }),
         passwordVerifyCode: builder.query({
-            query: code => `/password_verify/${code}`,
+            query: code => `${process.env.REACT_APP_API_URL}/password_verify/${code}`,
             transformErrorResponse: res => ({
                 ...res, notification: "Code not found"
             }),
@@ -72,7 +72,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
             query: ({password, code}) => {
                 console.log(password, code);
                 return {
-                    url: `/users/reset_password/${code}`,
+                    url: `${process.env.REACT_APP_API_URL}/users/reset_password/${code}`,
                     method: 'POST',
                     body: {password}
                 }
